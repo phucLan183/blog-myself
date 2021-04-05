@@ -5,33 +5,41 @@ const app = new express();
 const fileUpload = require('express-fileupload');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
-const expressSession = require('express-session');
+const session = require('express-session');
 const authMiddleware = require('./middlerware/authMiddleware');
 const redirectIfAuthenticatedMiddleware = require('./middlerware/redirectIfAuthenticatedMiddleware');
 
 //Ket noi voi mongodb
-mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser:true, useUnifiedTopology: true, useCreateIndex: true});
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+});
 
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({
+  extended: true
+}))
 app.use(express.static('public'))
 app.set('view engine', 'ejs')
 app.use(fileUpload())
 
-app.use(expressSession({
-  secret: 'keyboard cat',
+app.use(session({
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: {
+    secure: false,
+  }
 }))
 
 global.loggedIn = null;
-app.use("*", function(req, res, next) {
+app.use("*", function (req, res, next) {
   loggedIn = req.session.userId;
   next()
 })
 
-const validationMiddlerware = require('./middlerware/validationMiddlerware'); 
+const validationMiddlerware = require('./middlerware/validationMiddlerware');
 app.use('/posts/store', validationMiddlerware)
 
 //Kiem soat trang chinh
@@ -42,7 +50,7 @@ app.get('/about', function (req, res) {
   res.render('about');
 })
 
-app.get('/contact', function(req, res){
+app.get('/contact', function (req, res) {
   res.render('contact')
 })
 
