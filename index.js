@@ -10,7 +10,7 @@ const authMiddleware = require('./middlerware/authMiddleware');
 const redirectIfAuthenticatedMiddleware = require('./middlerware/redirectIfAuthenticatedMiddleware');
 
 //Ket noi voi mongodb
-mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser:true, useUnifiedTopology: true, useCreateIndex: true});
+mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser:true, useUnifiedTopology: true, useCreateIndex: true});
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
