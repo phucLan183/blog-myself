@@ -5,21 +5,25 @@ const bcrypt = require('bcrypt');
 const UserSchema = new Schema({
     username: {
         type: String,
+        lowercase: true,
         required: true,
         unique: true
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        minlength: 10
     }
+}, {
+    timestamps: true,
 })
 
-UserSchema.pre('save', function(next){
-    const user = this
-    bcrypt.hash(user.password, 10, function(err, hash){
-        user.password = hash
-        next()
-    })
+UserSchema.pre('save', async function(next){
+    const user = this;
+    if(user.isModified('password')){
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+    next();
 })
 
 const User = mongoose.model('User', UserSchema)

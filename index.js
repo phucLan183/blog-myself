@@ -14,6 +14,11 @@ mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
+}, (err)  => {
+  if (err) {
+    console.log(err);
+  }
+  console.log('Database success');
 });
 
 app.use(express.json())
@@ -72,7 +77,7 @@ app.post('/posts/store', authMiddleware, storePostController)
 const newUserController = require('./controller/newUser');
 app.get('/auth/register', redirectIfAuthenticatedMiddleware, newUserController)
 
-const registerUser = require('./controller/storeUser');
+const registerUser = require('./controller/register');
 app.post('/users/register', redirectIfAuthenticatedMiddleware, registerUser)
 
 const loginPostController = require('./controller/loginPost');
