@@ -12,7 +12,7 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-        minlength: 10
+        minlength: 7
     }
 }, {
     timestamps: true,
