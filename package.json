@@ -2,6 +2,9 @@
   "title": "Clean Blog",
   "name": "startbootstrap-clean-blog",
   "version": "5.0.9",
+  "engines":  {
+    "node": "14.15.4"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
