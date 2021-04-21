@@ -2,7 +2,7 @@
   "title": "Clean Blog",
   "name": "startbootstrap-clean-blog",
   "version": "5.0.9",
-  "engines":  {
+  "engines": {
     "node": "14.15.4"
   },
   "scripts": {
@@ -19,7 +19,6 @@
     "template"
   ],
   "homepage": "https://startbootstrap.com/themes/clean-blog",
-
   "license": "MIT",
   "author": "Start Bootstrap",
   "contributors": [
@@ -34,6 +33,7 @@
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "bootstrap": "4.5.0",
+    "cloudinary": "^1.25.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
@@ -41,6 +41,7 @@
     "express-session": "^1.17.1",
     "jquery": "3.5.1",
     "mongoose": "^5.12.3",
+    "multer": "^1.4.2",
     "nodemon": "^2.0.6"
   },
   "devDependencies": {

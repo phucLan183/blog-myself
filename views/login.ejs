@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('layouts/header'); -%>
+
 <body>
   <!-- Navigation -->
   <%- include('layouts/navbar'); -%>
@@ -21,7 +22,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <form action="/users/login" method="POST" >
+        <form action="/login" method="POST">
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>User Name</label>
@@ -31,7 +32,8 @@
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Password</label>
-              <input type="password" class="form-control" placeholder="Password" id="password" name="password" minlength="8">
+              <input type="password" class="form-control" placeholder="Password" id="password" name="password"
+                minlength="8">
             </div>
           </div>
           <br>
@@ -48,4 +50,5 @@
   <!-- Scripts -->
   <%- include('layouts/scripts'); -%>
 </body>
+
 </html>
