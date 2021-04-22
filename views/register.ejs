@@ -22,7 +22,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <form action="/users/register" method="POST">
+        <form action="/register" method="POST">
           <% if (error) { %>
           <p><%= error %></p>
           <%}%>
@@ -38,6 +38,13 @@
               <input type="password" class="form-control" placeholder="Password" id="password" name="password">
             </div>
           </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Repeat your password</label>
+              <input type="password" class="form-control" placeholder="Repeat your password" id="repeat_password"
+                name="repeat_password">
+            </div>
+          </div>
           <br>
           <div class="form-group">
             <button type="submit" class="btn btn-primary" id="sendMessageButton">Register</button>
@@ -51,9 +58,6 @@
   <%- include('layouts/footer'); -%>
           <!-- Scripts -->
           <%- include('layouts/scripts'); -%>
-          <!-- Contact Form JavaScript -->
-          <!-- <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script> -->
 </body>
 
 </html>

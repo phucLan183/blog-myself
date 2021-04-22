@@ -4,28 +4,38 @@ const bcrypt = require('bcrypt');
 const register = async (req, res) => {
   const user = {
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    repeat_pass: req.body.repeat_password,
   }
   const checkUser = await UserPost.findOne({
     username: user.username
   })
 
-  if (checkUser) {
-    res.render('register', {
-      error: 'Ten dang nhap da duoc su dung'
-    })
-  } else {
+  try {
+    if (checkUser) {
+      res.render('register', {
+        error: 'Tên đăng ký đã được sử dụng'
+      })
+    }
+    const checkpass = user.password === user.repeat_pass
+    if (!checkpass) {
+      res.render('register', {
+        error: 'Nhập sai mật khẩu'
+      })
+    }
+
     const dataUser = new UserPost({
       username: user.username,
       password: user.password
     })
     const saveData = await dataUser.save()
-
-    if (saveData) {
-      res.render('register', {
-        error: 'Dang ky thanh cong'
-      })
-    }
+    res.render('register', {
+      error: 'Đăng ký thành công'
+    })
+  } catch (error) {
+    res.render('register', {
+      error: error.message
+    })
   }
 }
 
