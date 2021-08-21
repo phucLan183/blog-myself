@@ -1,0 +1,20 @@
+<div
+  class="
+    alert
+    <%=
+    message.error
+    ?
+    'alert-warning'
+    :
+    'alert-success'%>
+    alert-dismissible
+    fade
+    show
+  "
+  role="alert"
+>
+  <%= message.error || message.success %>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('layouts/head'); -%>
+
+<body>
+  <!-- Navigation -->
+  <%- include('layouts/navbar'); -%>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('<%= dataUser.background.url %>')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="account-heading">
+            <img src="<%= dataUser.avatar.url %>" class="rounded-circle mx-auto d-block" alt="Avatar" width="200" height="200" />
+            <h2><%= dataUser.username %></h2>
+            <% if (loggedIn != dataUser._id) {%>
+              <% if (dataUser.followers.indexOf(loggedIn) == -1) {%>
+              <a href="/account/follow?id=<%= dataUser._id %>" class="btn btn-primary">Follow</a>
+              <%}%>
+              <% if (dataUser.followers.indexOf(loggedIn) != -1) {%>
+              <a href="/account/unfollow?id=<%= dataUser._id %>" class="btn btn-primary">Unfollow</a>
+              <%}%>
+            <%}%>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="toolbar active" id="pills-ariticle-tab" data-toggle="pill" href="#pills-ariticle" role="tab"
+              aria-controls="pills-ariticle" aria-selected="true">Article</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="toolbar" id="pills-about-tab" data-toggle="pill" href="#pills-about" role="tab"
+              aria-controls="pills-about" aria-selected="false">About</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="toolbar" id="pills-friends-tab" data-toggle="pill" href="#pills-friends" role="tab"
+              aria-controls="pills-friends" aria-selected="false">Friends (<%= dataUser.friends.length %>) </a>
+          </li>
+          <% if (loggedIn == dataUser._id) { %>
+          <li class="nav-item ml-auto bd-highlight" role="presentation">
+            <a class="toolbar " id="pills-setting-tab" data-toggle="pill" href="#pills-setting" role="tab"
+              aria-controls="pills-setting" aria-selected="false"><i class="bi bi-three-dots"></i></a>
+          </li>
+          <%}%>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </header>
+  <!-- Main Content -->
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <% if (message.error || message.success) { %> <%-
+        include('components/alert', {message}); %> <%}%>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-ariticle" role="tabpanel" aria-labelledby="pills-ariticle-tab">
+            <% if (articles.length > 0) {%>
+            <% for (let article of articles) {%>
+            <%- include('components/article', {article}); -%>
+            <% } %>
+            <%} else {%>
+            <p>Bạn chưa có bài viết nào, <a href="/create">ấn vào đây để viết bài</a></p>
+            <%}%>
+            </div>
+            <div class="tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
+              <div class="card bg-light border border-light">
+                <div class="card-body">
+                  <h5 class="card-title d-flex justify-content-center"><%= dataUser.username %></h5>
+                  <p class="card-text">Address: Planet Earth</p>
+                  <div class="d-flex justify-content-between">
+                  <p class="card-text">Total Article: <%= articles.length %></p>
+                  <p class="card-text ">Total Followers: <%= dataUser.followers.length %></p>
+                  </div>
+                  <p class="card-text d-flex justify-content-center">Account create at <%= dataUser.createdAt.toDateString() %></p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab">
+              <div class="row row-cols-1 row-cols-md-3">
+                <% for (let friend of dataUser.friends) {%>
+                <div class="col mb-4">
+                  <a href="/account?id=<%= friend._id %>">
+                    <div class="card h-100">
+                    <img src="<%= friend.avatar.url %>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= friend.username %></h5>
+                        <p class="card-text"></p>
+                        <% if (loggedIn == dataUser._id) {%>
+                        <a href="/account/unfollow?id=<%= friend._id %>" class="btn btn-primary">Unfollow</a>
+                        <%}%>
+                    </div>
+                  </div>
+                  </a>
+                </div>
+                <%}%>
+              </div>
+            </div>
+            <% if (loggedIn == dataUser._id) {%>
+            <div class="tab-pane fade" id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
+              <div class="accordion" id="accordionExample">
+                <div class="card">
+                  <div class="card-header" id="headingFour">
+                    <h2 class="mb-0">
+                      <button class="btn btn-light btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Change Avatar 
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <form action="/account/setting/avatar?id=<%= dataUser._id %>" method="post" enctype="multipart/form-data">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <button type="submit" class="input-group-text" id="inputGroupFileAddon01">
+                              Upload Avatar
+                            </button>
+                          </div>
+                          <div class="custom-file">
+                            <input
+                              type="file"
+                              class="custom-file-input"
+                              id="inputGroupFile01"
+                              aria-label="inputGroupFileAddon01"
+                              name="avatar"
+                              required
+                            />
+                            <label class="custom-file-label" for="inputGroupFile01">
+                              Choose file
+                            </label>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                      <button class="btn btn-light btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Change Background 
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <form action="/account/setting/background?id=<%= dataUser._id %>" method="post" enctype="multipart/form-data">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <button type="submit" class="input-group-text " id="inputGroupFileAddon02">
+                              Upload background
+                            </button>
+                          </div>
+                          <div class="custom-file">
+                            <input
+                              type="file"
+                              class="custom-file-input"
+                              id="inputGroupFile02"
+                              aria-label="inputGroupFileAddon02"
+                              name="background"
+                              required
+                            />
+                            <label class="custom-file-label" for="inputGroupFile02">
+                              Choose file
+                            </label>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                      <button class="btn btn-light btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Edit Profile
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <form action="/account/setting/profile?id=<%= dataUser._id %>" method="post">
+                        <div class="form-group">
+                          <label>User Name</label>
+                          <input type="text" class="form-control" name="username">
+                        </div>
+                        <!-- <div class="form-group">
+                          <label>Address</label>
+                          <input type="text" class="form-control" name="address">
+                        </div>
+                        <div class="form-group">
+                          <label>User Name Url</label>
+                          <input type="text" class="form-control" >
+                        </div> -->
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                      <button class="btn btn-light btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Change Password
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <form action="/account/setting/password?id=<%= dataUser._id %>" method="post">
+                        <div class="form-group">
+                          <label>Old Password</label>
+                          <input type="password" class="form-control" name="oldPassword">
+                        </div>
+                        <div class="form-group">
+                          <label>New Password</label>
+                          <input type="password" class="form-control" name="newPassword">
+                        </div>
+                        <div class="form-group">
+                          <label>Confirm Password</label>
+                          <input type="password" class="form-control" name="confirmPassword">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%}%>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <!-- Footer -->
+    <%- include('layouts/footer'); -%>
+    <!-- Scripts -->
+    <%- include('layouts/scripts'); -%>
+    <script>
+      $('#inputGroupFile01').on('change', function () {
+        //get the file name
+        var fileName = $(this).val().replace('C:\\fakepath\\', ' ');
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      });
+      $('#inputGroupFile02').on('change', function () {
+        //get the file name
+        var fileName = $(this).val().replace('C:\\fakepath\\', ' ');
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      });
+    </script>
+</body>
+
+</html>

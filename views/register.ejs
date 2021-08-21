@@ -1,63 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('layouts/header'); -%>
+  <%- include('layouts/head'); -%>
 
-<body>
-  <!-- Navigation -->
-  <%- include('layouts/navbar'); -%>
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('/img/contact-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Register a new account </h1>
+  <body>
+    <!-- Navigation -->
+    <%- include('layouts/navbar'); -%>
+    <!-- Page Header -->
+    <header
+      class="masthead"
+      style="background-image: url('/img/register-bg.jpg')"
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+              <h1>Register</h1>
+              <span class="subheading">make a new account</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
-  <!-- Main Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <form action="/register" method="POST">
-          <% if (error) { %>
-          <p><%= error %></p>
-          <%}%>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>User Name</label>
-              <input type="text" class="form-control" placeholder="User Name" id="username" name="username">
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto bg-light rounded-lg">
+          <% if (message.error || message.success) { %> <%-
+          include('components/alert', {message}); %> <%}%>
+          <form action="/register" method="POST">
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>User Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="User Name"
+                  id="username"
+                  name="username"
+                />
+              </div>
             </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Password</label>
-              <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Email"
+                  id="Email"
+                  name="email"
+                />
+              </div>
             </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Repeat your password</label>
-              <input type="password" class="form-control" placeholder="Repeat your password" id="repeat_password"
-                name="repeat_password">
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Password"
+                  id="password"
+                  name="password"
+                />
+              </div>
             </div>
-          </div>
-          <br>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton">Register</button>
-          </div>
-        </form>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Repeat your password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Repeat your password"
+                  id="repeat_password"
+                  name="repeat_password"
+                />
+              </div>
+            </div>
+            <br />
+            <div class="form-group">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="sendMessageButton"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <hr>
-  <!-- Footer -->
-  <%- include('layouts/footer'); -%>
-          <!-- Scripts -->
-          <%- include('layouts/scripts'); -%>
-</body>
-
+    <hr />
+    <!-- Footer -->
+    <%- include('layouts/footer'); -%>
+    <!-- Scripts -->
+    <%- include('layouts/scripts'); -%>
+  </body>
 </html>

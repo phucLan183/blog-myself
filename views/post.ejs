@@ -1,42 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('layouts/header'); -%>
+  <%- include('layouts/head'); -%>
 
-<body>
-  <!-- Navigation -->
-  <%- include('layouts/navbar'); -%>
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('<%= detailPost.image.url_img %>')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-heading">
-            <h1><%= detailPost.title %></h1>
-            <!-- <h2 class="subheading"><%= detailPost.content %></h2> -->
-            <span class="meta">Posted by
-              <a href="#"><%= detailPost.username %></a>
-              on <%= detailPost.createdAt%> </span>
+  <body>
+    <!-- Navigation -->
+    <%- include('layouts/navbar'); -%>
+    <!-- Page Header -->
+    <header
+      class="masthead"
+      style="background-image: url('<%= detailPost.image.url_img %>')"
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading">
+              <h1><%= detailPost.title %></h1>
+              <span class="meta"
+                >Posted by
+                <a href="/account/<%= detailPost.user_id.id %>">
+                  <%= detailPost.user_id.username %>
+                </a>
+                on <%= detailPost.createdAt.toDateString()%>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
-  <!-- Post Content -->
-  <article>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <%= detailPost.content %>
+    </header>
+    <!-- Post Content -->
+    <article>
+      <div class="container">
+        <div class="row"></div>
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto bg-light rounded-lg">
+            <% if (loggedIn === detailPost.user_id.id) {%>
+            <div class="d-flex flex-row-reverse bd-highlight">
+              <div class="dropright">
+                <button
+                  type="button"
+                  class="btn btn-outline-info btn-three-dots"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="bi bi-three-dots"></i>
+                </button>
+                <div class="dropdown-menu dropdown-post">
+                  <a href="/post/edit?id=<%= detailPost.id %>">Edit</a>
+                  <div class="dropdown-divider"></div>
+                  <a
+                    href="/post/delete?id=<%= detailPost.id %>"
+                    role="button"
+                    data-toggle="modal"
+                    data-target="#staticBackdrop"
+                    >Delete</a
+                  >
+                </div>
+                <div
+                  class="modal fade"
+                  id="staticBackdrop"
+                  data-backdrop="static"
+                  data-keyboard="false"
+                  tabindex="-1"
+                  aria-labelledby="staticBackdropLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">
+                          Xóa bài
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Bạn có chắc muốn xóa bài viết này
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          Đóng
+                        </button>
+                        <a
+                          href="/post/delete?id=<%= detailPost.id %>"
+                          role="button"
+                          class="btn btn-primary"
+                          >Xác nhận</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%}%> <%- detailPost.content %>
+          </div>
         </div>
       </div>
-    </div>
-  </article>
-  <hr>
-  <!-- Footer -->
-  <%- include('layouts/footer'); -%>
-  <!-- Scripts -->
-  <%- include('layouts/scripts'); -%>
-</body>
-
+    </article>
+    <hr />
+    <!-- Footer -->
+    <%- include('layouts/footer'); -%>
+    <!-- Scripts -->
+    <%- include('layouts/scripts'); -%>
+  </body>
 </html>

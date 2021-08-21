@@ -1,60 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('layouts/header'); -%>
+  <%- include('layouts/head'); -%>
 
-<body>
-  <!-- Navigation -->
-  <%- include('layouts/navbar'); -%>
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('/img/contact-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Create New Post </h1>
+  <body>
+    <!-- Navigation -->
+    <%- include('layouts/navbar'); -%>
+    <!-- Page Header -->
+    <header
+      class="masthead"
+      style="background-image: url('/img/article-bg.jpg')"
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+              <h1>Create Article</h1>
+              <span class="subheading">Don't be afraid and just do it</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
-  <!-- Main Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <form method="post" enctype="multipart/form-data">
-          <% if(error) {%>
-          <p><%= error %></p>
-          <%}%>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Title</label>
-              <input name="title" required type="text" class="form-control" placeholder="Title" id="title"/>
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <form method="post" enctype="multipart/form-data">
+            <% if(message.error || message.success) {%> <%-
+            include('components/alert', {message}); %> <%}%>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">
+                  Upload background
+                </span>
+              </div>
+              <div class="custom-file">
+                <input
+                  type="file"
+                  class="custom-file-input"
+                  id="inputGroupFile01"
+                  aria-label="inputGroupFileAddon01"
+                  name="image"
+                  required
+                />
+                <label class="custom-file-label" for="inputGroupFile01">
+                  Choose file
+                </label>
+              </div>
             </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Content</label>
-              <textarea name="content" rows="5" class="form-control" id="content" placeholder="Content"></textarea>
+            <div class="control-group">
+              <div class="form-group controls">
+                <label>Title</label>
+                <input
+                  name="title"
+                  required
+                  type="text"
+                  class="form-control"
+                  placeholder="Title"
+                  id="title"
+                  required
+                />
+              </div>
             </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Image</label>
-              <input name="image" type="file" class="form-controls" id="image"/>
+            <div class="control-group">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Status</label>
+                <select
+                  class="form-control"
+                  id="exampleFormControlSelect1"
+                  name="status"
+                >
+                  <option value="1">Public</option>
+                  <option value="0">Private</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <br>
-          <button type="submit" class="btn btn-primary" id="sendMessageButton">Create</button>
-        </form>
+            <div class="control-group">
+              <div class="form-group controls">
+                <label>Content</label>
+                <textarea
+                  name="content"
+                  rows="5"
+                  class="form-control"
+                  id="content"
+                  placeholder="Content"
+                  required
+                ></textarea>
+              </div>
+            </div>
+
+            <br />
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="sendMessageButton"
+            >
+              Create
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <hr>
-  <!-- Footer -->
-  <%- include('layouts/footer'); -%>
-          <!-- Scripts -->
-          <%- include('layouts/scripts'); -%>
-</body>
-
+    <hr />
+    <!-- Footer -->
+    <%- include('layouts/footer'); -%>
+    <!-- Scripts -->
+    <%- include('layouts/scripts'); -%>
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script>
+      CKEDITOR.replace('content');
+    </script>
+    <script>
+      $('#inputGroupFile01').on('change', function () {
+        //get the file name
+        var fileName = $(this).val().replace('C:\\fakepath\\', ' ');
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      });
+    </script>
+  </body>
 </html>

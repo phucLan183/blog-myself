@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layouts/head'); -%>
+
+  <body>
+    <!-- Navigation -->
+    <%- include('layouts/navbar'); -%>
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('/img/edit-bg.jpg')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+              <h1>Edit Article</h1>
+              <span class="subheading">Make it better</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <form method="post" enctype="multipart/form-data">
+            <% if(message.error || message.success) {%> <%-
+            include('components/alert', {message}); %> <%}%>
+            <input type="hidden" name="image1" value="<%= dataPost.image %>">
+            <div class="control-group">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupFileAddon01"
+                    >Upload background</span
+                  >
+                </div>
+                <div class="custom-file">
+                  <input
+                    type="file"
+                    class="custom-file-input"
+                    id="inputGroupFile01"
+                    name="image"
+                  />
+                  <label
+                    class="custom-file-label"
+                    for="inputGroupFile01"
+                  >Choose file</label>
+                </div>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group controls">
+                <label>Title</label>
+                <input
+                  name="title"
+                  required
+                  type="text"
+                  class="form-control"
+                  placeholder="Title"
+                  id="title"
+                  value="<%= dataPost.title %>"
+                />
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Status</label>
+                <select
+                  class="form-control"
+                  id="exampleFormControlSelect1"
+                  name="status"
+                >
+                  <option <%= dataPost.status ? 'selected' : '' %> value="1">Public</option>
+                  <option <%= !dataPost.status ? 'selected' : '' %> value="0">Private</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group controls">
+                <label>Content</label>
+                <textarea
+                  name="content"
+                  rows="5"
+                  class="form-control"
+                  id="content"
+                  placeholder="Content"
+                  required
+                ><%- dataPost.content %></textarea>
+              </div>
+            </div>
+            <br />
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="sendMessageButton"
+            >
+              Update
+            </button>
+            <a
+              href="/post?id=<%= dataPost._id %>"
+              class="btn btn-secondary"
+            >
+              Cancel
+            </a>
+          </form>
+          
+        </div>
+      </div>
+    </div>
+    <hr />
+    <!-- Footer -->
+    <%- include('layouts/footer'); -%>
+    <!-- Scripts -->
+    <%- include('layouts/scripts'); -%>
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script>
+      CKEDITOR.replace('content');
+    </script>
+    <script>
+      $('#inputGroupFile01').on('change', function () {
+        //get the file name
+        var fileName = $(this).val().replace('C:\\fakepath\\', ' ');
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      });
+    </script>
+  </body>
+</html>

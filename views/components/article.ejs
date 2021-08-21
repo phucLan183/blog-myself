@@ -1,0 +1,16 @@
+<div class="post-preview bg-light rounded-lg">
+  <a href="/post?id=<%= article.id %>">
+    <h2 class="post-title"><%= article.title %></h2>
+  </a>
+  <% if (!article.status) {%>
+  <p class="post-meta float-right">Private</p>
+  <%}%>
+  <p class="post-meta">
+    Posted by
+    <a href="/account?id=<%= article.user_id.id %>">
+      <%= article.user_id.username %>
+    </a>
+    on <%- article.createdAt.toDateString() %>
+  </p>
+</div>
+<hr class="my-4" />

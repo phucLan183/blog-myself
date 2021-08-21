@@ -3,12 +3,15 @@ const Schema = mongoose.Schema
 const BlogPostSchema = new Schema({
     title: {
         type: String,
+        required: true,
     },
     content: {
         type: String,
+        required: true,
     },
-    username: {
-        type: String,
+    user_id: {
+        type: mongoose.Types.ObjectId,
+        ref: "User"
     },
     image: {
         public_id: {
@@ -17,6 +20,10 @@ const BlogPostSchema = new Schema({
         url_img: {
             type: String,
         }
+    },
+    status: {
+        type: Boolean,
+        required: true,
     }
 },{
     timestamps: true,

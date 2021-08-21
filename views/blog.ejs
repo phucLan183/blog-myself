@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layouts/head'); -%>
+
+  <body>
+    <!-- Navigation -->
+    <%- include('layouts/navbar'); -%>
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('img/blog-bg.jpg')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+              <h1>Blog</h1>
+              <span class="subheading">This is what I do</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <% for (let blogPost of blogPosts){ %> <%-
+          include('components/article', {article: blogPost}) -%> <% } %>
+          <!-- Pager -->
+          <% if (blogPosts.length > 4) {%>
+          <nav aria-label="Page navigation example ">
+            <ul class="pagination d-flex justify-content-center">
+              <li class="page-item">
+                <a class="page-link text-info" href="#">Previous</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link text-info" href="#">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link text-info" href="#">2</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link text-info" href="#">3</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link text-info" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+          <%}%>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <!-- Footer -->
+    <%- include('layouts/footer'); -%>
+    <!-- Scripts -->
+    <%- include('layouts/scripts'); -%>
+  </body>
+</html>
