@@ -7,5 +7,6 @@ module.exports = async (req, res, next) => {
     select: ['avatar', 'username']
   })
   res.locals.articles = await BlogPost.find({ user_id: req.query.id }).populate({ path: "user_id" }).sort({ _id: -1 })
+  res.locals.articlesPublic = await BlogPost.find({ user_id: req.query.id, status: true }).populate({ path: "user_id" }).sort({ _id: -1 })
   next();
 }

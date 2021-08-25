@@ -61,9 +61,15 @@
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-ariticle" role="tabpanel" aria-labelledby="pills-ariticle-tab">
             <% if (articles.length > 0) {%>
-            <% for (let article of articles) {%>
-            <%- include('components/article', {article}); -%>
-            <% } %>
+              <% if (loggedIn == dataUser._id) {%>
+                <% for (let article of articles) {%>
+                <%- include('components/article', {article}); -%>
+                <% } %>
+              <%} else {%>
+                <% for (let article of articlesPublic) {%>
+                <%- include('components/article', {article}); -%>
+                <% } %>
+              <%}%>
             <%} else {%>
             <p>Bạn chưa có bài viết nào, <a href="/create">ấn vào đây để viết bài</a></p>
             <%}%>
@@ -74,7 +80,7 @@
                   <h5 class="card-title d-flex justify-content-center"><%= dataUser.username %></h5>
                   <p class="card-text">Address: Planet Earth</p>
                   <div class="d-flex justify-content-between">
-                  <p class="card-text">Total Article: <%= articles.length %></p>
+                  <p class="card-text">Total Article: <%= articlesPublic.length %></p>
                   <p class="card-text ">Total Followers: <%= dataUser.followers.length %></p>
                   </div>
                   <p class="card-text d-flex justify-content-center">Account create at <%= dataUser.createdAt.toDateString() %></p>

@@ -97,14 +97,17 @@ const relationship = async (req, res) => {
       $addToSet: {
         followers: userId,
       }
-    }, { new: true })
+    }, { new: true }).populate({
+      path: 'friends',
+      select: ['avatar', 'username']
+    })
     const friend = await UserPost.findByIdAndUpdate({
       _id: userId,
     }, {
       $addToSet: {
         friends: friendId
       }
-    }, { new: true })
+    })
     res.render('account', {
       dataUser: follower,
       message: {
@@ -126,7 +129,10 @@ const divisions = async (req, res) => {
       $pull: {
         followers: userId,
       }
-    }, { new: true })
+    }, { new: true }).populate({
+      path: 'friends',
+      select: ['avatar', 'username']
+    })
     const friend = await UserPost.findByIdAndUpdate({
       _id: userId,
     }, {
