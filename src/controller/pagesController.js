@@ -41,7 +41,7 @@ const sendContact = async (req, res) => {
             phone: request.phone,
             message: request.message
         })
-        if (contact) {
+        if (!contact) {
             return res.render('contact', {
                 message: {
                     error: 'Không được để chống dữ liệu'

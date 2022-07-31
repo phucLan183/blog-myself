@@ -5,14 +5,14 @@ const app = express();
 const ejs = require('ejs');
 const mongoose = require('mongoose');
 const session = require('express-session');
-
-
+const path = require('path')
 
 app.use(express.json())
 app.use(express.urlencoded({
   extended: true
 }))
-app.use(express.static('public'))
+app.set('views', __dirname + '/../src/views');
+app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 
 app.use(session({
@@ -33,7 +33,7 @@ app.use("*", function (req, res, next) {
 const validation = require('./utils/validation')
 app.use('/register', validation.register)
 
-const shareMiddleware = require('./middlerware/shareMiddleware')
+const shareMiddleware = require('./middleware/shareMiddleware')
 app.use(shareMiddleware)
 
 const clientRoute = require('./router/client');
@@ -45,8 +45,6 @@ const port = process.env.PORT || 5000;
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
 }, (err) => {
   if (err) {
     console.log(err);

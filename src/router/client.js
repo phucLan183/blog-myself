@@ -3,7 +3,7 @@ const router = express.Router();
 const pagesController = require('../controller/pagesController');
 const authController = require('../controller/authController');
 const upload = require('../utils/multer');
-const authMiddleware = require('../middlerware/authMiddleware');
+const authMiddleware = require('../middleware/authMiddleware');
 const accountController = require('../controller/accountController');
 
 router.get('/', pagesController.home)

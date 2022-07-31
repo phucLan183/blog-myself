@@ -1,60 +1,33 @@
 {
-  "title": "Clean Blog",
-  "name": "startbootstrap-clean-blog",
-  "version": "5.0.9",
-  "engines": {
-    "node": "14.15.4"
-  },
+  "name": "BlogMyself",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
-  "description": "Clean Blog is a Medium inspired blog theme for Bootstrap.",
-  "keywords": [
-    "css",
-    "sass",
-    "html",
-    "responsive",
-    "theme",
-    "template"
-  ],
-  "homepage": "https://startbootstrap.com/themes/clean-blog",
-  "license": "MIT",
-  "author": "Start Bootstrap",
-  "contributors": [
-    "David Miller (http://davidmiller.io/)"
-  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/StartBootstrap/startbootstrap-clean-blog.git"
+    "url": "git+https://github.com/phucLan183/blog-myself.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phucLan183/blog-myself/issues"
+  },
+  "homepage": "https://github.com/phucLan183/blog-myself#readme",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "5.13.0",
     "bcrypt": "^5.0.1",
-    "bootstrap": "4.5.0",
-    "cloudinary": "^1.25.1",
-    "dotenv": "^8.2.0",
-    "ejs": "^3.1.5",
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "jquery": "3.5.1",
-    "mongoose": "^5.12.3",
-    "multer": "^1.4.2",
-    "nodemailer": "^6.6.3",
-    "nodemon": "^2.0.6"
-  },
-  "devDependencies": {
-    "browser-sync": "^2.26.14",
-    "del": "5.1.0",
-    "gulp": "4.0.2",
-    "gulp-autoprefixer": "7.0.1",
-    "gulp-clean-css": "4.3.0",
-    "gulp-header": "2.0.9",
-    "gulp-plumber": "^1.2.1",
-    "gulp-rename": "2.0.0",
-    "gulp-sass": "^5.0.0",
-    "gulp-uglify": "3.0.2",
-    "merge-stream": "2.0.0"
-  },
-  "main": "index.js"
+    "cloudinary": "^1.30.1",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.5.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.7.7",
+    "nodemon": "^2.0.19"
+  }
 }
